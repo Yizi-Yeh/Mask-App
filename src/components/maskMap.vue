@@ -11,6 +11,17 @@ export default {
       map: {}
     }
   },
+  computed: {
+    currDistrictInfo () {
+      return this.$store.getters.currDistrictInfo
+    }
+  },
+  watch: {
+    // 切換行政區
+    currDistrictInfo (dist) {
+      this.map.panTo(new L.LatLng(dist.latitude, dist.longitude))
+    }
+  },
   mounted () {
     this.map = L.map('mask-map', {
       center: [25.03, 121.55],
