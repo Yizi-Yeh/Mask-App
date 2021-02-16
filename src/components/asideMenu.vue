@@ -87,6 +87,7 @@ export default {
   watch: {
     districtList (v) {
       const [arr] = v
+      console.log(arr)
       this.currDistrict = arr.name
     }
   },

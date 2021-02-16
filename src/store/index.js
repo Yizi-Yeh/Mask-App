@@ -14,15 +14,18 @@ export default createStore({
     showModal: false
   },
   getters: {
+    // 抓出城市 List
     cityList (state) {
       return state.location.map((d) => d.name)
     },
+    // 抓出區域 List
     districtList (state) {
       return state.location.find((d) => d.name === state.currCity)?.districts || []
     },
     filteredStores (state) {
       // 依縣市 行政區分組
       const { stores } = state
+      console.log(state)
       // 加入關鍵字判斷功能
       return state.keywords
         ? stores.filter((d) => d.name.includes(state.keywords))

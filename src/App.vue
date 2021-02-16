@@ -3,8 +3,7 @@
   <div id="app">
     <!-- 側欄元件 -->
     <aside-menu />
-    <div class="mask-map" id="mask-map">
-    </div>
+    <maskMap />
     <light-box />
   </div>
 </template>
@@ -12,11 +11,14 @@
 import { mapActions } from 'vuex'
 import asideMenu from './components/asideMenu.vue'
 import lightBox from './components/lightbox.vue'
+import maskMap from './components/maskMap.vue'
 export default {
   name: 'App',
   components: {
     asideMenu,
-    lightBox
+    lightBox,
+    maskMap
+
   },
   methods: {
     ...mapActions(['fetchLocations', 'fetchPharmacies'])
