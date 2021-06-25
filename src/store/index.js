@@ -11,7 +11,8 @@ export default createStore({
     // 存放API回傳的藥局資訊
     stores: [],
     keywords: '',
-    showModal: false
+    showModal: false,
+    infoBoxSid: null
   },
   getters: {
     // 抓出城市 List
@@ -19,13 +20,14 @@ export default createStore({
       return state.location.map((d) => d.name)
     },
     // 抓出區域 List
+    // 依下拉的城市做區域的改變
     districtList (state) {
       return state.location.find((d) => d.name === state.currCity)?.districts || []
     },
     filteredStores (state) {
       // 依縣市 行政區分組
+      // 先從 state 中 解構 stored
       const { stores } = state
-      console.log(state)
       // 加入關鍵字判斷功能
       return state.keywords
         ? stores.filter((d) => d.name.includes(state.keywords))
@@ -52,8 +54,11 @@ export default createStore({
     setKeywords (state, payload) {
       state.keywords = payload
     },
-    setShowModal (state, payload) {
+    setshowModal (state, payload) {
       state.showModal = payload
+    },
+    setInfoBoxSid (state, payload) {
+      state.infoBoxSid = payload
     }
   },
   actions: {
@@ -70,12 +75,13 @@ export default createStore({
         .then((res) => res.json())
 
       // 整理資料格式，拆出經緯度
+      // d為features陣列中的值
       const data = json.features.map((d) => ({
+        // 將 properties中的變數解構，重組一個data新陣列
         ...d.properties,
         latitude: d.geometry.coordinates[0],
         longitude: d.geometry.coordinates[1]
       }))
-      console.log(data)
       // 透過 commit 來操作 mutations
       commit('setStores', data)
     }
